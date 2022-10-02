@@ -11,7 +11,6 @@ internal sealed class Discord
 {
     public DiscordClient Client { get; private set; }
 
-    private readonly DateTime _spawnTime = new(); // unused
     private readonly Dictionary<ulong, DiscordChannel> _channels = new();
     private readonly IntervalTimer _timer = new();
 
