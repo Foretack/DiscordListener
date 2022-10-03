@@ -17,8 +17,8 @@ internal static class Program
     {
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Verbose()
-            .WriteTo.File("logs_info.txt", LogEventLevel.Information, "{Timestamp:HH:mm:ss zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}", flushToDiskInterval: TimeSpan.FromMinutes(30), rollingInterval: RollingInterval.Month)
-            .WriteTo.File("verbose.txt", LogEventLevel.Verbose, "{Timestamp:HH:mm:ss zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}", flushToDiskInterval: TimeSpan.FromMinutes(30), rollingInterval: RollingInterval.Day)
+            .WriteTo.File("logs.txt", LogEventLevel.Information, "{Timestamp:HH:mm:ss zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}", flushToDiskInterval: TimeSpan.FromMinutes(30), rollingInterval: RollingInterval.Month)
+            .WriteTo.File("debug.txt", LogEventLevel.Debug, "{Timestamp:HH:mm:ss zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}", flushToDiskInterval: TimeSpan.FromMinutes(30), rollingInterval: RollingInterval.Day)
             .WriteTo.Console(LogEventLevel.Information)
             .CreateLogger();
         Log.Verbose("Logger initialized");
