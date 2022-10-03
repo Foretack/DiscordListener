@@ -28,21 +28,29 @@ internal static class DiscordExtensions
 
     public static object ToSerializable(this PresenceUpdateEventArgs e)
     {
-        return new
+        try
         {
-            Type = e.Activity.ActivityType.ToString(),
-            Activities = e.PresenceAfter?.Activities
-                .Where(x => x is not null)
-                .Select(x => x.RichPresence),
-            Author = new
+            return new
             {
-                e.User.Username,
-                e.User.Discriminator,
-                e.User.Id,
-                e.User.Mention,
-                e.User.IsBot,
-                e.User.Flags
-            }
-        };
+                Type = e.Activity?.ActivityType.ToString(),
+                Activities = e.PresenceAfter?.Activities?
+                    .Where(x => x is not null)
+                    .Select(x => x.RichPresence),
+                Author = new
+                {
+                    e.User.Username,
+                    e.User.Discriminator,
+                    e.User.Id,
+                    e.User.Mention,
+                    e.User.IsBot,
+                    e.User.Flags
+                }
+            };
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex, "Exception thrown while converting PresenceUpdateEventArgs to object");
+            return new { };
+        }
     }
 }
