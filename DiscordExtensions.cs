@@ -34,8 +34,8 @@ internal static class DiscordExtensions
             {
                 Type = e.Activity?.ActivityType.ToString(),
                 Activities = e.PresenceAfter?.Activities?
-                    .Where(x => x is not null)
-                    .Select(x => x.RichPresence),
+                    .Select(x => x.RichPresence)
+                    .Where(x => x is not null),
                 Author = new
                 {
                     e.User.Username,
