@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
@@ -13,6 +14,7 @@ internal sealed class Discord
 
     private readonly Dictionary<ulong, DiscordChannel> _channels = new();
     private readonly IntervalTimer _timer = new();
+    private readonly JsonSerializerOptions _jsonOptions = new() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
 
     public Discord(string token)
     {
@@ -57,14 +59,14 @@ internal sealed class Discord
 
     private async Task PresenceUpdated(DiscordClient sender, PresenceUpdateEventArgs e)
     {
-        string json = JsonSerializer.Serialize(e.ToSerializable());
+        string json = JsonSerializer.Serialize(e.ToSerializable(), _jsonOptions);
         _ = await Program.Redis.Sub.PublishAsync("discord:presences", json);
     }
 
     private async Task OnMessage(DiscordClient sender, MessageCreateEventArgs e)
     {
         if (!_channels.ContainsKey(e.Channel.Id)) _channels.Add(e.Channel.Id, e.Channel);
-        string json = JsonSerializer.Serialize(e.ToSerializable());
+        string json = JsonSerializer.Serialize(e.ToSerializable(), _jsonOptions);
         _ = await Program.Redis.Sub.PublishAsync("discord:messages", json);
     }
 
