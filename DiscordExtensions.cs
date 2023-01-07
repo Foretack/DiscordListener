@@ -11,17 +11,17 @@ internal static class DiscordExtensions
             GuildName = e.Guild.Name,
             ChannelId = e.Channel.Id,
             ChannelName = e.Channel.Name,
-            e.Message.Content,
-            e.Message.Embeds,
-            e.Message.Attachments,
+            e.Message?.Content,
+            e.Message?.Embeds,
+            e.Message?.Attachments,
             Author = new
             {
-                e.Author.Username,
-                e.Author.Discriminator,
-                e.Author.Id,
-                e.Author.Mention,
-                e.Author.IsBot,
-                e.Author.Flags
+                e.Author?.Username,
+                e.Author?.Discriminator,
+                e.Author?.Id,
+                e.Author?.Mention,
+                e.Author?.IsBot,
+                e.Author?.Flags
             }
         };
     }
@@ -38,12 +38,12 @@ internal static class DiscordExtensions
                     .Where(x => x is not null),
                 Author = new
                 {
-                    e.User.Username,
-                    e.User.Discriminator,
-                    e.User.Id,
-                    e.User.Mention,
-                    e.User.IsBot,
-                    e.User.Flags
+                    e.User?.Username,
+                    e.User?.Discriminator,
+                    e.User?.Id,
+                    e.User?.Mention,
+                    e.User?.IsBot,
+                    e.User?.Flags
                 }
             };
         }
