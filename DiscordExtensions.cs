@@ -7,10 +7,10 @@ internal static class DiscordExtensions
     {
         return new
         {
-            GuildId = e.Guild.Id,
-            GuildName = e.Guild.Name,
-            ChannelId = e.Channel.Id,
-            ChannelName = e.Channel.Name,
+            GuildId = e.Guild?.Id,
+            GuildName = e.Guild?.Name,
+            ChannelId = e.Channel?.Id,
+            ChannelName = e.Channel?.Name,
             e.Message?.Content,
             e.Message?.Embeds,
             e.Message?.Attachments,
