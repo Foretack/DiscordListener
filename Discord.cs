@@ -22,7 +22,7 @@ internal sealed class Discord
         {
             Token = token,
             TokenType = TokenType.Bot,
-            Intents = DiscordIntents.AllUnprivileged | DiscordIntents.GuildMessages | DiscordIntents.GuildPresences,
+            Intents = DiscordIntents.AllUnprivileged | DiscordIntents.GuildMessages | DiscordIntents.GuildPresences | DiscordIntents.MessageContents,
             LoggerFactory = new LoggerFactory().AddSerilog(Log.Logger)
         };
         Client = new DiscordClient(config);
@@ -31,12 +31,12 @@ internal sealed class Discord
         Client.MessageCreated += OnMessage;
         Client.PresenceUpdated += PresenceUpdated;
 
-        LoadChannels();
-
         _timer.Interval = TimeSpan.FromHours(1).TotalMilliseconds;
         _timer.AutoReset = true;
         _timer.Enabled = true;
         _timer.Elapsed += (_, _) => LoadChannels();
+
+        LoadChannels();
 
         Program.Redis.Sub.Subscribe("discord:messages:send").OnMessage(async x => await HandleSendMessage(x));
     }
